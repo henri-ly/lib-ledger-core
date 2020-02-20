@@ -66,12 +66,6 @@ install:
 - set PATH=C:\projects\deps\cmake\bin;%PATH%
 - set QTDIR=%QT5%
 
-#Create public key
-- ps: $fileContent = "-----BEGIN RSA PRIVATE KEY-----`n"
-- ps: $fileContent += $env:priv_key.Replace(' ', "`n")
-- ps: $fileContent += "`n-----END RSA PRIVATE KEY-----`n"
-- ps: Set-Content c:\users\appveyor\.ssh\id_rsa $fileContent
-- ssh-keygen -y -f c:\users\appveyor\.ssh\id_rsa > c:\users\appveyor\.ssh\id_rsa.pub
 
 #Install Node
 - ps: Install-Product node $env:nodejs_version
