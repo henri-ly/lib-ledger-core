@@ -11,13 +11,13 @@ jobs:
       
       - name: Setting up mac os
         run: |
-          chmod +x ./.githut/setup_macos.sh
-          ./.githut/setup_macos.sh
+          chmod +x ./.github/setup_macos.sh
+          ./.github/setup_macos.sh
 
       - name: Build lib armv7
         run: |
           chmod +x ./.github/build_lib.sh
-          ./.githut/build_lib.sh armv7
+          ./.github/build_lib.sh armv7
 
       - name: upload ios armv7 Artefact
         uses: actions/upload-artifact@v1
