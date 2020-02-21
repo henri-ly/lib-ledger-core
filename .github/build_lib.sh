@@ -27,7 +27,6 @@ echo "=====>Create build directory"
 
 echo "=====>Start build"
 unamestr=`uname`
-execute_commands $*
 
 echo "======> CMake config for $unamestr in $BUILD_CONFIG mode"
 
@@ -35,7 +34,7 @@ echo "Resetting xcode tools..."
 
 # The reset is necessary for obscure reasons not to sign on iOS (maybe the CI breaks the PATH or
 # something). See the fix below that removes signatures.
-sudo xcode-select --reset
+sudo xcode-select -s /Applications/Xcode_11.app
 
 export POLLY_IOS_BUNDLE_IDENTIFIER='com.ledger.core'
 #Needed for nocodesign toolchains
@@ -65,7 +64,7 @@ BUILD_CONFIG="Release"
 add_to_cmake_params -G "Xcode" -DCMAKE_BUILD_TYPE:STRING=Release -DBUILD_TESTS=OFF -DCMAKE_OSX_ARCHITECTURES:STRING=${ARCH} -DCMAKE_MACOSX_BUNDLE:BOOL=ON -DCMAKE_OSX_SYSROOT:STRING=${OSX_SYSROOT} -DCMAKE_TOOLCHAIN_FILE=${POLLY_ROOT}/${TOOLCHAIN_NAME}.cmake
 
 echo $cmake_params
-cmake $cmake_params
+cmake $cmake_params -S ../lib-ledger-core -B .
 
 echo "======> Build for $unamestr in $BUILD_CONFIG mode"
 echo " >>> Starting iOS build for architecture ${ARCH} with toolchain ${TOOLCHAIN_NAME} for ${OSX_SYSROOT}"
