@@ -2,7 +2,7 @@ version: 1.0.{build}
 image:
 - Visual Studio 2015
 environment:
-  LIB_VERSION: 3.3.0 # Hardcode the LIB_VERSION : should be retrieved by building libcore node module and run tests/lib_version.js
+  LIB_VERSION: 3.2.1 # Hardcode the LIB_VERSION : should be retrieved by building libcore node module and run tests/lib_version.js
   nodejs_version: "9"
   appveyor_rdp_password:
     secure: jb1LsDmcxCww7tA38S3xSw==
@@ -13,6 +13,13 @@ environment:
       BUILD_CONFIG: Release
       CMAKE_GENERATOR: "Visual Studio 14 2015 Win64"
       QT5: C:\Qt\5.10.1\msvc2015_64
+      SQLITE3_DIR: C:\Tools\vcpkg\packages\sqlite3_x64-windows
+      CMAKE_DIR: C:\projects\deps\cmake
+    - TOOL_CONFIG: mingw32
+      BUILD_CONFIG: Release
+      CMAKE_GENERATOR: "MinGW Makefiles"
+      QT5: C:\Qt\5.10.1\mingw53_32
+      MINGW: C:\Qt\Tools\mingw530_32
       SQLITE3_DIR: C:\Tools\vcpkg\packages\sqlite3_x64-windows
       CMAKE_DIR: C:\projects\deps\cmake
 
@@ -46,6 +53,12 @@ install:
 - set PATH=C:\projects\deps\cmake\bin;%PATH%
 - set QTDIR=%QT5%
 
+#Create public key
+- ps: $fileContent = "-----BEGIN RSA PRIVATE KEY-----`n"
+- ps: $fileContent += $env:priv_key.Replace(' ', "`n")
+- ps: $fileContent += "`n-----END RSA PRIVATE KEY-----`n"
+- ps: Set-Content c:\users\appveyor\.ssh\id_rsa $fileContent
+- ssh-keygen -y -f c:\users\appveyor\.ssh\id_rsa > c:\users\appveyor\.ssh\id_rsa.pub
 
 #Install Node
 - ps: Install-Product node $env:nodejs_version
