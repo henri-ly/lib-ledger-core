@@ -1,0 +1,27 @@
+name: build mobile
+on: [push]
+
+jobs:
+  nightly-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: true
+      
+      - name: Setting up mac os
+        run: |
+          chmod +x ./.githut/setup_macos.sh
+          ./.githut/setup_macos.sh
+
+      - name: Build lib armv7
+        run: |
+          chmod +x ./.github/build_lib.sh
+          ./.githut/build_lib.sh armv7
+
+     - name: upload ios armv7 Artefact
+        uses: actions/upload-artifact@v1
+        with:
+          name: armv7
+          path: ../lib-ledger-core-artifacts/armv7
+ 
