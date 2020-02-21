@@ -19,7 +19,7 @@ jobs:
           chmod +x ./.github/build_lib.sh
           ./.githut/build_lib.sh armv7
 
-     - name: upload ios armv7 Artefact
+      - name: upload ios armv7 Artefact
         uses: actions/upload-artifact@v1
         with:
           name: armv7
