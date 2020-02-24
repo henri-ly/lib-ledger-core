@@ -80,4 +80,4 @@ else
 fi
 
 mkdir -p ../lib-ledger-core-artifacts/$BUILD_TYPE
-cp -r $PATH_TO_LIB/*ledger-core* ../lib-ledger-core-artifacts/ios/$BUILD_TYPE
+cp -r $PATH_TO_LIB/*ledger-core* ../lib-ledger-core-artifacts/$BUILD_TYPE
