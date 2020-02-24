@@ -30,7 +30,11 @@ unamestr=`uname`
 
 echo "======> CMake config for $unamestr in $BUILD_CONFIG mode"
 
-echo "Resetting xcode tools..."
+# echo "Resetting xcode tools..."
+
+# The reset is necessary for obscure reasons not to sign on iOS (maybe the CI breaks the PATH or
+# something). See the fix below that removes signatures.
+sudo xcode-select -s /Applications/Xcode_10.app
 
 export POLLY_IOS_BUNDLE_IDENTIFIER='com.ledger.core'
 #Needed for nocodesign toolchains
