@@ -2,6 +2,29 @@ name: build mobile
 on: [push]
 
 jobs:
+  build-ios-x86_64:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: true
+      
+      - name: Setting up mac os
+        run: |
+          chmod +x ./.github/setup_macos.sh
+          ./.github/setup_macos.sh
+
+      - name: Build lib x86_64
+        run: |
+          chmod +x ./.github/build_lib.sh
+          ./.github/build_lib.sh x86_64
+
+      - name: upload ios x86_64 Artefact
+        uses: actions/upload-artifact@v1
+        with:
+          name: x86_64
+          path: ../lib-ledger-core-artifacts/x86_64
+
   build-ios-armv7:
     runs-on: macos-latest
     steps:
@@ -25,3 +48,25 @@ jobs:
           name: armv7
           path: ../lib-ledger-core-artifacts/armv7
  
+  build-ios-arm64:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: true
+      
+      - name: Setting up mac os
+        run: |
+          chmod +x ./.github/setup_macos.sh
+          ./.github/setup_macos.sh
+
+      - name: Build lib arm64
+        run: |
+          chmod +x ./.github/build_lib.sh
+          ./.github/build_lib.sh arm64
+
+      - name: upload ios arm64 Artefact
+        uses: actions/upload-artifact@v1
+        with:
+          name: arm64
+          path: ../lib-ledger-core-artifacts/arm64

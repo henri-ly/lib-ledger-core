@@ -17,13 +17,13 @@ function add_to_cmake_params {
 
 echo "=====>Cleaning to prepare clean build"
 echo "=====>Remove build directory"
-# rm -rf ../build-ledger-core
+rm -rf ../build-ledger-core
 
 echo "=====>Create which will contain artifacts"
 cd .. && (mkdir lib-ledger-core-artifacts || echo "lib-ledger-core-artifacts directory already exists")
 
 echo "=====>Create build directory"
-# (mkdir build-ledger-core || echo "build-ledger-core directory already exists") && cd build-ledger-core
+(mkdir build-ledger-core || echo "build-ledger-core directory already exists") && cd build-ledger-core
 
 echo "=====>Start build"
 unamestr=`uname`
@@ -64,13 +64,12 @@ BUILD_CONFIG="Release"
 add_to_cmake_params -G "Xcode" -DCMAKE_BUILD_TYPE:STRING=Release -DBUILD_TESTS=OFF -DCMAKE_OSX_ARCHITECTURES:STRING=${ARCH} -DCMAKE_MACOSX_BUNDLE:BOOL=ON -DCMAKE_OSX_SYSROOT:STRING=${OSX_SYSROOT} -DCMAKE_TOOLCHAIN_FILE=${POLLY_ROOT}/${TOOLCHAIN_NAME}.cmake
 
 echo $cmake_params
-# cmake $cmake_params -S ../lib-ledger-core -B .
+cmake $cmake_params -S ../lib-ledger-core -B .
 
 echo "======> Build for $unamestr in $BUILD_CONFIG mode"
 echo " >>> Starting iOS build for architecture ${ARCH} with toolchain ${TOOLCHAIN_NAME} for ${OSX_SYSROOT}"
-# xcodebuild -project ledger-core.xcodeproj -configuration Release -jobs 4
+xcodebuild -project ledger-core.xcodeproj -configuration Release -jobs 4
 
-pwd
 PATH_TO_LIB=./build-ledger-core/core/src/
 if [ "$ARCH" == "armv7" -o "$ARCH" == "arm64" ]; then
     export BUILD_TYPE=ios/${ARCH}
