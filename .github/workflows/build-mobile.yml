@@ -23,7 +23,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: x86_64
-          path: ../lib-ledger-core-artifacts/x86_64
+          path: ../lib-ledger-core-artifacts/ios/x86_64
 
   build-ios-armv7:
     runs-on: macos-latest
@@ -46,7 +46,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: armv7
-          path: ../lib-ledger-core-artifacts/armv7
+          path: ../lib-ledger-core-artifacts/ios/armv7
  
   build-ios-arm64:
     runs-on: macos-latest
@@ -69,4 +69,4 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: arm64
-          path: ../lib-ledger-core-artifacts/arm64
+          path: ./lib-ledger-core-artifacts/ios/arm64

@@ -47,7 +47,7 @@ elif [ "$ARCH" == "arm64" ]; then
 export TOOLCHAIN_NAME='ios-nocodesign-13-2-dep-9-3-arm64'
 export OSX_SYSROOT=iphoneos
 else
-export TOOLCHAIN_NAME='ios-nocodesign'
+export TOOLCHAIN_NAME='ios-nocodesign-13-2-dep-9-3'
 export OSX_SYSROOT=iphonesimulator
 export ARCH=x86_64
 #Copy iphone.cmake which is not forcing CMAKE_OSX_SYSROOT to iphoneos in cache
@@ -80,4 +80,4 @@ else
 fi
 
 mkdir -p ../lib-ledger-core-artifacts/$BUILD_TYPE
-cp -r $PATH_TO_LIB/*ledger-core* ../lib-ledger-core-artifacts/$BUILD_TYPE
+cp -r $PATH_TO_LIB/*ledger-core* ../lib-ledger-core-artifacts/ios/$BUILD_TYPE
