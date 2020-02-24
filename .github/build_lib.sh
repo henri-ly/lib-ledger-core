@@ -34,20 +34,20 @@ echo "======> CMake config for $unamestr in $BUILD_CONFIG mode"
 
 # The reset is necessary for obscure reasons not to sign on iOS (maybe the CI breaks the PATH or
 # something). See the fix below that removes signatures.
-sudo xcode-select -s /Applications/Xcode_10.app
+sudo xcode-select --reset
 
 export POLLY_IOS_BUNDLE_IDENTIFIER='com.ledger.core'
 #Needed for nocodesign toolchains
 export XCODE_XCCONFIG_FILE=$POLLY_ROOT/scripts/NoCodeSign.xcconfig
 echo "command_ios with architecture : $ARCH"
 if [ "$ARCH" == "armv7" ]; then
-export TOOLCHAIN_NAME='ios-nocodesign-11-2-dep-9-3-armv7'
+export TOOLCHAIN_NAME='ios-nocodesign-13-2-dep-9-3-armv7'
 export OSX_SYSROOT=iphoneos
 elif [ "$ARCH" == "arm64" ]; then
-export TOOLCHAIN_NAME='ios-nocodesign-11-2-dep-9-3-arm64'
+export TOOLCHAIN_NAME='ios-nocodesign-13-2-dep-9-3-arm64'
 export OSX_SYSROOT=iphoneos
 else
-export TOOLCHAIN_NAME='ios-nocodesign-11-2-dep-9-3'
+export TOOLCHAIN_NAME='ios-nocodesign-13-2-dep-9-3'
 export OSX_SYSROOT=iphonesimulator
 export ARCH=x86_64
 #Copy iphone.cmake which is not forcing CMAKE_OSX_SYSROOT to iphoneos in cache
