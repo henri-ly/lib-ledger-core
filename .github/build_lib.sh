@@ -66,18 +66,20 @@ add_to_cmake_params -G "Xcode" -DCMAKE_BUILD_TYPE:STRING=Release -DBUILD_TESTS=O
 echo $cmake_params
 cmake $cmake_params -S ../lib-ledger-core -B .
 
-echo "======> Build for $unamestr in $BUILD_CONFIG mode"
-echo " >>> Starting iOS build for architecture ${ARCH} with toolchain ${TOOLCHAIN_NAME} for ${OSX_SYSROOT}"
-xcodebuild -project ledger-core.xcodeproj -configuration Release -jobs 4
+# echo "======> Build for $unamestr in $BUILD_CONFIG mode"
+# echo " >>> Starting iOS build for architecture ${ARCH} with toolchain ${TOOLCHAIN_NAME} for ${OSX_SYSROOT}"
+# xcodebuild -project ledger-core.xcodeproj -configuration Release -jobs 4
 
-PATH_TO_LIB=./build-ledger-core/core/src/
-if [ "$ARCH" == "armv7" -o "$ARCH" == "arm64" ]; then
-    export BUILD_TYPE=ios/${ARCH}
-    PATH_TO_LIB=./build-ledger-core/core/src/Release-iphoneos
-else
-    export BUILD_TYPE=ios/x86_64
-    PATH_TO_LIB=./build-ledger-core/core/src/Release-iphonesimulator
-fi
+# PATH_TO_LIB=./build-ledger-core/core/src/
+# if [ "$ARCH" == "armv7" -o "$ARCH" == "arm64" ]; then
+#     export BUILD_TYPE=ios/${ARCH}
+#     PATH_TO_LIB=./build-ledger-core/core/src/Release-iphoneos
+# else
+#     export BUILD_TYPE=ios/x86_64
+#     PATH_TO_LIB=./build-ledger-core/core/src/Release-iphonesimulator
+# fi
 
+pwd
+ls
 mkdir -p ../lib-ledger-core-artifacts/$BUILD_TYPE
 cp -r $PATH_TO_LIB/*ledger-core* ../lib-ledger-core-artifacts/$BUILD_TYPE

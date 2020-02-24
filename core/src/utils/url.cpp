@@ -33,6 +33,7 @@
 #include <sstream>
 #include <iomanip>
 #include "hex.h"
+#include <cctype>
 
 namespace ledger {
     namespace core {
