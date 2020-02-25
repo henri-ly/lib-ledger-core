@@ -40,18 +40,19 @@ export POLLY_IOS_BUNDLE_IDENTIFIER='com.ledger.core'
 export XCODE_XCCONFIG_FILE=$POLLY_ROOT/scripts/NoCodeSign.xcconfig
 echo "command_ios with architecture : $ARCH"
 if [ "$ARCH" == "armv7" ]; then
-  export TOOLCHAIN_NAME='ios-nocodesign-13-2-dep-9-3-armv7'
+  export TOOLCHAIN_NAME='ios-nocodesign-11-2-dep-9-3-armv7'
   export OSX_SYSROOT=iphoneos
 elif [ "$ARCH" == "arm64" ]; then
-  export TOOLCHAIN_NAME='ios-nocodesign-13-2-dep-9-3-arm64'
+  export TOOLCHAIN_NAME='ios-nocodesign-11-2-dep-9-3-arm64'
   export OSX_SYSROOT=iphoneos
 else
   export TOOLCHAIN_NAME='ios-nocodesign-11-2-dep-9-3'
   export OSX_SYSROOT=iphonesimulator
   export ARCH=x86_64
-  #Copy iphone.cmake which is not forcing CMAKE_OSX_SYSROOT to iphoneos in cache
-  cp `pwd`/../lib-ledger-core/tools/build_ios/iphone.cmake `pwd`/../lib-ledger-core/toolchains/polly/os/
 fi
+
+#Copy iphone.cmake which is not forcing CMAKE_OSX_SYSROOT to iphoneos in cache
+cp `pwd`/../lib-ledger-core/tools/build_ios/iphone.cmake `pwd`/../lib-ledger-core/toolchains/polly/os/
 
 cp `pwd`/../lib-ledger-core/tools/build_ios/framework.plist.in `pwd`
 cp `pwd`/../lib-ledger-core/tools/build_ios/install_name.sh `pwd`
