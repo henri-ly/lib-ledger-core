@@ -5,7 +5,6 @@ export ARCH=$1
 export CMAKE=cmake
 export PATH=$PATH:~/cmake_folder/bin
 
-export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/"
 export POLLY_ROOT=`pwd`/toolchains/polly
 
 function add_to_cmake_params {
@@ -34,7 +33,7 @@ echo "======> CMake config for $unamestr in $BUILD_CONFIG mode"
 
 # The reset is necessary for obscure reasons not to sign on iOS (maybe the CI breaks the PATH or
 # something). See the fix below that removes signatures.
-sudo xcode-select --reset
+# sudo xcode-select --reset
 
 export POLLY_IOS_BUNDLE_IDENTIFIER='com.ledger.core'
 #Needed for nocodesign toolchains
@@ -51,7 +50,7 @@ export TOOLCHAIN_NAME='ios-nocodesign-13-2-dep-9-3'
 export OSX_SYSROOT=iphonesimulator
 export ARCH=x86_64
 #Copy iphone.cmake which is not forcing CMAKE_OSX_SYSROOT to iphoneos in cache
-cp `pwd`/../lib-ledger-core/tools/build_ios/iphone.cmake `pwd`/../lib-ledger-core/toolchains/polly/os/
+# cp `pwd`/../lib-ledger-core/tools/build_ios/iphone.cmake `pwd`/../lib-ledger-core/toolchains/polly/os/
 fi
 
 cp `pwd`/../lib-ledger-core/tools/build_ios/framework.plist.in `pwd`
