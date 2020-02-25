@@ -69,4 +69,4 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: arm64
-          path: ./lib-ledger-core-artifacts/ios/arm64
+          path: ../lib-ledger-core-artifacts/ios/arm64

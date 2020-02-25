@@ -10,12 +10,6 @@ environment:
     secure: B+4FNFeW6sbRsl7XJYnHUYptAx/2AvV7XySuhhEMdvcloUz0YXxgX/EguKV2Bvm5GaBKYLlq4G2Lw7udm4l68I9g3x+2pZvWiMBUhTRaTGVqi8PXXN+RON62G77yR9Lt/zUR+ljVjuJmRqQBU3NkzOJAAfZ/RDOCAEcWkA3cEE64IkfpqOTHBPW0PpwZcPGFF/l4MGdP8r5XIeu/WwPZHfQjGnDlME0VgkRWflA/Pjt0GcyDSLURXQBk+5JJhn9FjGPCKD+db4xQkW7zhep/su5urEf0HYTmVHRiKMZNfBPGSnL/Lmr6343qc6YF78lyX2U9saoJrf+tuxqAHtUq0KhkHltbNeIUaxvcC7TcH+kEm/Uxl/al8iRiMWE86b8z/wiFQI1xA+oejrFQivbyZVJ+cOifoZ7HhYwP+niOnUG+ZzT5WFLejnsnd4Lwdi5XzWaKKooIPtZ9qcyk15SFzVBayEeeljNk/gByrT6U+25LUqO6ekXrZ+A86Tmjkhp67B5+JNxis+k3sCZ63ASP6LhL9NvrVNky1ZGB8WAZ/hs=
   matrix:
     - TOOL_CONFIG: vs2015
-      BUILD_CONFIG: Debug
-      CMAKE_GENERATOR: "Visual Studio 14 2015 Win64"
-      QT5: C:\Qt\5.10.1\msvc2015_64
-      SQLITE3_DIR: C:\Tools\vcpkg\packages\sqlite3_x64-windows
-      CMAKE_DIR: C:\projects\deps\cmake
-    - TOOL_CONFIG: vs2015
       BUILD_CONFIG: Release
       CMAKE_GENERATOR: "Visual Studio 14 2015 Win64"
       QT5: C:\Qt\5.10.1\msvc2015_64
@@ -145,10 +139,6 @@ build_script:
 
 after_build:
   - set should_deploy=false
-  - if %APPVEYOR_REPO_BRANCH%==develop set should_deploy=true
-  - if %APPVEYOR_REPO_BRANCH%==master set should_deploy=true
-  - if %APPVEYOR_REPO_TAG%==true set should_deploy=true  #for tests
-  - if %should_deploy%==true aws s3 sync ".\%LIB_VERSION%\win\%TOOL_CONFIG%" "s3://ledger-lib-ledger-core/%DEPLOY_VERSION%/win/%TOOL_CONFIG%" --acl public-read
 
 artifacts:
   - path: .\%LIB_VERSION%\win\%TOOL_CONFIG%\*
