@@ -6,7 +6,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-      arch: [x86_64, armv7, arm64]
+        arch: [x86_64, armv7, arm64]
     steps:
       - uses: actions/checkout@v1
         with:
