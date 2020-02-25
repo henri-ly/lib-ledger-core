@@ -2,8 +2,11 @@ name: build mobile
 on: [push]
 
 jobs:
-  build-ios-x86_64:
+  build-ios:
     runs-on: macos-latest
+    strategy:
+      matrix:
+      arch: [x86_64, armv7, arm64]
     steps:
       - uses: actions/checkout@v1
         with:
@@ -14,59 +17,44 @@ jobs:
           chmod +x ./.github/setup_macos.sh
           ./.github/setup_macos.sh
 
-      - name: Build lib x86_64
+      - name: Build lib ${{ matrix.arch }}
         run: |
           chmod +x ./.github/build_lib.sh
-          ./.github/build_lib.sh x86_64
+          ./.github/build_lib.sh ${{ matrix.arch }}
 
-      - name: upload ios x86_64 Artefact
+      - name: upload ios ${{ matrix.arch }} Artefact
         uses: actions/upload-artifact@v1
         with:
-          name: x86_64
-          path: ../lib-ledger-core-artifacts/ios/x86_64
+          name: ${{ matrix.arch }}
+          path: ../lib-ledger-core-artifacts/ios/${{ matrix.arch }}
 
-  build-ios-armv7:
+  build-ios-universal:
     runs-on: macos-latest
+    needs: build-ios
     steps:
-      - uses: actions/checkout@v1
-        with:
-          submodules: true
-      
-      - name: Setting up mac os
-        run: |
-          chmod +x ./.github/setup_macos.sh
-          ./.github/setup_macos.sh
-
-      - name: Build lib armv7
-        run: |
-          chmod +x ./.github/build_lib.sh
-          ./.github/build_lib.sh armv7
-
-      - name: upload ios armv7 Artefact
-        uses: actions/upload-artifact@v1
+      - name: Download armv7
+        uses: actions/download-artifact@v1
         with:
           name: armv7
-          path: ../lib-ledger-core-artifacts/ios/armv7
- 
-  build-ios-arm64:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v1
+
+      - name: Download arm64
+        uses: actions/download-artifact@v1
         with:
-          submodules: true
-      
-      - name: Setting up mac os
-        run: |
-          chmod +x ./.github/setup_macos.sh
-          ./.github/setup_macos.sh
+          name: armv64
 
-      - name: Build lib arm64
+      - name: Print the final result
+        shell: bash
         run: |
-          chmod +x ./.github/build_lib.sh
-          ./.github/build_lib.sh arm64
-
-      - name: upload ios arm64 Artefact
+          lipo -create armv7/ledger-core.framework/ledger-core arm64/ledger-core.framework/ledger-core -o ledger-core
+          mkdir -p universal/ledger-core.framework
+          mv ledger-core universal/ledger-core.framework/
+          cp armv7/ledger-core.framework/Info.plist universal/ledger-core.framework/
+          install_name_tool -add_rpath "@executable_path/Frameworks/universal" universal/ledger-core.framework/ledger-core
+	        lipo -info universal/ledger-core.framework/ledger-core
+    
+      - name: upload ios universal Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: arm64
-          path: ../lib-ledger-core-artifacts/ios/arm64
+          name: universal
+          path: ../lib-ledger-core-artifacts/universal
+
