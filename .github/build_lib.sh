@@ -40,17 +40,17 @@ export POLLY_IOS_BUNDLE_IDENTIFIER='com.ledger.core'
 export XCODE_XCCONFIG_FILE=$POLLY_ROOT/scripts/NoCodeSign.xcconfig
 echo "command_ios with architecture : $ARCH"
 if [ "$ARCH" == "armv7" ]; then
-export TOOLCHAIN_NAME='ios-nocodesign-13-2-dep-9-3-armv7'
-export OSX_SYSROOT=iphoneos
+  export TOOLCHAIN_NAME='ios-nocodesign-13-2-dep-9-3-armv7'
+  export OSX_SYSROOT=iphoneos
 elif [ "$ARCH" == "arm64" ]; then
-export TOOLCHAIN_NAME='ios-nocodesign-13-2-dep-9-3-arm64'
-export OSX_SYSROOT=iphoneos
+  export TOOLCHAIN_NAME='ios-nocodesign-13-2-dep-9-3-arm64'
+  export OSX_SYSROOT=iphoneos
 else
-export TOOLCHAIN_NAME='ios-nocodesign-13-2-dep-9-3'
-export OSX_SYSROOT=iphonesimulator
-export ARCH=x86_64
-#Copy iphone.cmake which is not forcing CMAKE_OSX_SYSROOT to iphoneos in cache
-# cp `pwd`/../lib-ledger-core/tools/build_ios/iphone.cmake `pwd`/../lib-ledger-core/toolchains/polly/os/
+  export TOOLCHAIN_NAME='ios-nocodesign-11-2-dep-9-3'
+  export OSX_SYSROOT=iphonesimulator
+  export ARCH=x86_64
+  #Copy iphone.cmake which is not forcing CMAKE_OSX_SYSROOT to iphoneos in cache
+  cp `pwd`/../lib-ledger-core/tools/build_ios/iphone.cmake `pwd`/../lib-ledger-core/toolchains/polly/os/
 fi
 
 cp `pwd`/../lib-ledger-core/tools/build_ios/framework.plist.in `pwd`
@@ -60,7 +60,7 @@ echo 'Fixing NoCodeSign (see https://github.com/ruslo/polly/issues/302 for furth
 sed -i '' '/CODE_SIGN_ENTITLEMENTS/d' $(pwd)/../lib-ledger-core/toolchains/polly/scripts/NoCodeSign.xcconfig
 
 BUILD_CONFIG="Release"
-add_to_cmake_params -G "Xcode" -DCMAKE_BUILD_TYPE:STRING=Release -DBUILD_TESTS=OFF -DCMAKE_OSX_ARCHITECTURES:STRING=${ARCH} -DCMAKE_MACOSX_BUNDLE:BOOL=ON -DCMAKE_OSX_SYSROOT:STRING=${OSX_SYSROOT} -DCMAKE_TOOLCHAIN_FILE=${POLLY_ROOT}/${TOOLCHAIN_NAME}.cmake
+add_to_cmake_params -G "Xcode" -DCMAKE_BUILD_TYPE:STRING=Release -DBUILD_TESTS=OFF -DCMAKE_MACOSX_BUNDLE:BOOL=ON -DCMAKE_OSX_SYSROOT:STRING=${OSX_SYSROOT} -DCMAKE_TOOLCHAIN_FILE=${POLLY_ROOT}/${TOOLCHAIN_NAME}.cmake
 
 echo $cmake_params
 cmake $cmake_params -S ../lib-ledger-core -B .
