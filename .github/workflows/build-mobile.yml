@@ -56,5 +56,5 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: universal
-          path: ../lib-ledger-core-artifacts/universal
+          path: ./universal
 
