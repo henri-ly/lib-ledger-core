@@ -50,7 +50,7 @@ jobs:
           mv ledger-core universal/ledger-core.framework/
           cp armv7/ledger-core.framework/Info.plist universal/ledger-core.framework/
           install_name_tool -add_rpath "@executable_path/Frameworks/universal" universal/ledger-core.framework/ledger-core
-	  lipo -info universal/ledger-core.framework/ledger-core
+          lipo -info universal/ledger-core.framework/ledger-core
 
       - name: upload ios universal Artifact
         uses: actions/upload-artifact@v1
