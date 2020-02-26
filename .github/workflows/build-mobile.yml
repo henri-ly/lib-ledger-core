@@ -40,7 +40,7 @@ jobs:
       - name: Download arm64
         uses: actions/download-artifact@v1
         with:
-          name: armv64
+          name: arm64
 
       - name: Print the final result
         shell: bash
